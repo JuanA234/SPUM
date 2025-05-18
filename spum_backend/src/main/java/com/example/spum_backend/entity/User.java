@@ -1,0 +1,48 @@
+package com.example.spum_backend.entity;
+
+import com.example.spum_backend.enumeration.RolesEnum;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "users")
+public class User implements UserDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
+
+    private String userName;
+    private String userLastName;
+    private String email;
+    private String password;
+
+    private RolesEnum role;
+
+    @OneToOne(mappedBy = "user")
+    private Student student;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(role.getRole()));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+}
