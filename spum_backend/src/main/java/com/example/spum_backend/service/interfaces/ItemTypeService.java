@@ -4,8 +4,8 @@ import com.example.spum_backend.dto.ItemTypeDTO;
 
 public interface ItemTypeService {
 
-    ItemTypeDTO addItemType(ItemTypeDTO itemTypeDTO);
-    ItemTypeDTO updateItemType(ItemTypeDTO itemTypeDTO);
+    ItemTypeDTO addItemType(String itemTypeName);
+    ItemTypeDTO updateItemType(Long id, String itemTypeName);
     void deleteItemType(Long id);
 
 }

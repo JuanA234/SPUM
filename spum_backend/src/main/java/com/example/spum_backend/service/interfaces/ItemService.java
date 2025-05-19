@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ItemService {
     List<ItemResponseDTO> findAllItems();
-    Optional<ItemResponseDTO> findItemById(Long id);
-    ItemResponseDTO addAnItem(ItemRequestDTO item);
+    ItemResponseDTO findItemById(Long id);
+    ItemResponseDTO addItem(ItemRequestDTO item);
     void deleteItemById(Long id);
 }
