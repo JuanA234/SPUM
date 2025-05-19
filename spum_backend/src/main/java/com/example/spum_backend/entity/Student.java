@@ -2,6 +2,7 @@ package com.example.spum_backend.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "students")
+@Builder
 public class Student {
 
     @Id

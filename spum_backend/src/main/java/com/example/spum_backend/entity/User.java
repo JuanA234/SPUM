@@ -3,6 +3,7 @@ package com.example.spum_backend.entity;
 import com.example.spum_backend.enumeration.RolesEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
+@Builder
 public class User implements UserDetails {
 
     @Id
@@ -33,7 +35,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role.getRole()));
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_"+role.getRole()));
     }
 
     @Override
