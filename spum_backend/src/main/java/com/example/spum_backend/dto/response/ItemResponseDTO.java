@@ -1,4 +1,15 @@
 package com.example.spum_backend.dto.response;
 
-public record ItemResponseDTO(String itemName, String itemDescription, Long quantity, Long itemType) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ItemResponseDTO{
+    String itemName;
+    String itemDescription;
+    Long itemQuantity;
+    Long itemType;
 }

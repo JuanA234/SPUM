@@ -39,10 +39,10 @@ public class AuthService {
 
         User user = User
                 .builder()
-                .userName(student.firstName())
-                .userLastName(student.lastName())
-                .email(student.email())
-                .password(passwordEncoder.encode(student.password()))
+                .userName(student.getFirstName())
+                .userLastName(student.getLastName())
+                .email(student.getEmail())
+                .password(passwordEncoder.encode(student.getPassword()))
                 .role(RolesEnum.STUDENT)
                 .build();
 
@@ -52,7 +52,7 @@ public class AuthService {
 
         Student studenToRegister = Student
                 .builder()
-                .studentCollegeId(student.studentCollegeId())
+                .studentCollegeId(student.getStudentCollegeId())
                 .user(user)
                 .penalties(List.of())
                 .build();
@@ -66,11 +66,11 @@ public class AuthService {
 
         User userToRegister = User
                 .builder()
-                .userName(user.name())
-                .userLastName(user.lastName())
-                .email(user.email())
-                .password(passwordEncoder.encode(user.password()))
-                .role(user.role())
+                .userName(user.getName())
+                .userLastName(user.getLastName())
+                .email(user.getEmail())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .role(user.getRole())
                 .build();
 
         userRepository.save(userToRegister);
@@ -78,8 +78,8 @@ public class AuthService {
 
     public TokenResponseDTO login(UserLoginRequestDTO loginDetails){
 
-        String email = loginDetails.email();
-        String password = loginDetails.password();
+        String email = loginDetails.getEmail();
+        String password = loginDetails.getPassword();
 
 
         User user = userRepository.findByEmail(email)

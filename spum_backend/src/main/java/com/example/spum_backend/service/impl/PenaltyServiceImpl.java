@@ -12,24 +12,31 @@ import com.example.spum_backend.repository.PenaltyRepository;
 import com.example.spum_backend.repository.PenaltyTypeRepository;
 import com.example.spum_backend.repository.StudentRepository;
 import com.example.spum_backend.service.interfaces.PenaltyService;
+import com.example.spum_backend.service.interfaces.internal.PenaltyServiceEntity;
+import com.example.spum_backend.service.interfaces.internal.PenaltyTypeServiceEntity;
+import com.example.spum_backend.service.interfaces.internal.StudentServiceEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class PenaltyServiceImpl implements PenaltyService {
+@Service
+public class PenaltyServiceImpl implements PenaltyService, PenaltyServiceEntity {
 
     private final ModelMapper modelMapper;
     private final PenaltyRepository penaltyRepository;
-    private final StudentRepository studentRepository;
-    private final PenaltyTypeRepository penaltyTypeRepository;
+    private final StudentServiceEntity studentServiceEntity;
+    private final PenaltyTypeServiceEntity penaltyTypeServiceEntity;
 
 
-    public PenaltyServiceImpl(ModelMapper modelMapper, PenaltyRepository penaltyRepository, StudentRepository studentRepository, PenaltyTypeRepository penaltyTypeRepository) {
+    public PenaltyServiceImpl(ModelMapper modelMapper, PenaltyRepository penaltyRepository, StudentServiceEntity studentServiceEntity, PenaltyTypeServiceEntity penaltyTypeServiceEntity) {
         this.modelMapper = modelMapper;
         this.penaltyRepository = penaltyRepository;
-        this.studentRepository = studentRepository;
-        this.penaltyTypeRepository = penaltyTypeRepository;
+        this.studentServiceEntity = studentServiceEntity;
+        this.penaltyTypeServiceEntity = penaltyTypeServiceEntity;
     }
 
     @Override
@@ -42,20 +49,18 @@ public class PenaltyServiceImpl implements PenaltyService {
 
     @Override
     public PenaltyResponseDTO createPenalty(PenaltyRequestDTO penaltyRequestDTO) {
+
         // Verify a student exists in our db
+        // Use email or student id.
+        Student student = studentServiceEntity.findStudentByEmail(penaltyRequestDTO.getEmail());
 
-        Student student = studentRepository.findByUser_Email(penaltyRequestDTO.email())
-                .orElseThrow(() -> new StudentNotFoundException("Student Not Found"));
-
-
-        PenaltyType penaltyType = penaltyTypeRepository.findById(penaltyRequestDTO.penaltyType())
-                .orElseThrow(() -> new PenaltyTypeNotFoundException("Penalty Type Not Found"));
+        PenaltyType penaltyType = penaltyTypeServiceEntity.getPenaltyTypeEntityById(penaltyRequestDTO.getPenaltyType());
 
         // Applying the penalty.
 
         Penalty penalty = Penalty.builder()
-                .penaltyDate(penaltyRequestDTO.penaltyDate())
-                .description(penaltyRequestDTO.description())
+                .penaltyDate(penaltyRequestDTO.getPenaltyDate())
+                .description(penaltyRequestDTO.getDescription())
                 .type(penaltyType)
                 .student(student)
                 .build();
@@ -65,9 +70,29 @@ public class PenaltyServiceImpl implements PenaltyService {
 
     @Override
     public void deletePenalty(Long id) {
-        Penalty penalty = penaltyRepository.findById(id)
-                .orElseThrow(() -> new PenaltyNotFoundException("Penalty Type Not Found"));
-
+        Penalty penalty = getPenaltyById(id);
         penaltyRepository.delete(penalty);
+    }
+
+
+    @Override
+    public Penalty getPenaltyById(Long id) {
+        return penaltyRepository.findById(id)
+                .orElseThrow(() -> new PenaltyNotFoundException("Penalty Not Found"));
+    }
+
+    @Override
+    public Penalty savePenalty(Penalty penalty) {
+        return penaltyRepository.save(penalty);
+    }
+
+    @Override
+    public Optional<Penalty> findActivePenalty(Long id, LocalDateTime startTime) {
+        return penaltyRepository.findActivePenalizations(id, startTime);
+    }
+
+    @Override
+    public List<Penalty> findAllPenalties() {
+        return penaltyRepository.findAll();
     }
 }

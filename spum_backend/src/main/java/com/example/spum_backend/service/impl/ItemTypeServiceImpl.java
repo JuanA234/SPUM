@@ -6,9 +6,10 @@ import com.example.spum_backend.exception.ItemNotFoundException;
 import com.example.spum_backend.exception.ItemTypeNotFoundException;
 import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemTypeService;
+import com.example.spum_backend.service.interfaces.internal.ItemTypeServiceEntity;
 import org.modelmapper.ModelMapper;
 
-public class ItemTypeServiceImpl implements ItemTypeService {
+public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEntity {
 
     private final ModelMapper modelMapper;
     private final ItemTypeRepository itemTypeRepository;
@@ -28,16 +29,20 @@ public class ItemTypeServiceImpl implements ItemTypeService {
 
     @Override
     public ItemTypeDTO updateItemType(Long id, String itemTypeName) {
-        ItemType itemType = itemTypeRepository.findById(id)
-                .orElseThrow(() -> new ItemTypeNotFoundException("Item Type Not Found"));
+        ItemType itemType = getItemTypeById(id);
         itemType.setItemTypeName(itemTypeName);
         return modelMapper.map(itemTypeRepository.save(itemType), ItemTypeDTO.class);
     }
 
     @Override
     public void deleteItemType(Long id) {
-        ItemType itemType = itemTypeRepository.findById(id)
-                .orElseThrow(() -> new ItemTypeNotFoundException("Item Type Not Found"));
+        ItemType itemType = getItemTypeById(id);
         itemTypeRepository.delete(itemType);
+    }
+
+    @Override
+    public ItemType getItemTypeById(Long id) {
+        return itemTypeRepository.findById(id)
+                .orElseThrow(() -> new ItemTypeNotFoundException("Item Type Not Found"));
     }
 }

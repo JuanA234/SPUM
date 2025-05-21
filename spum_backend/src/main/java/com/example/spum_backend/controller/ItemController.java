@@ -1,11 +1,9 @@
 package com.example.spum_backend.controller;
 
+import com.example.spum_backend.dto.request.ItemRequestDTO;
 import com.example.spum_backend.dto.response.ItemResponseDTO;
 import com.example.spum_backend.service.interfaces.ItemService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,4 +27,8 @@ public class ItemController {
         return itemService.findItemById(id);
     }
 
+    @PostMapping("/add")
+    public ItemResponseDTO addItem(@RequestBody ItemRequestDTO itemRequestDTO) {
+        return itemService.addItem(itemRequestDTO);
+    }
 }

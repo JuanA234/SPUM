@@ -1,6 +1,17 @@
 package com.example.spum_backend.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
-public record BookingResponseDTO(String userName, String userLastName, LocalDateTime startTime, LocalDateTime endTime) {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class BookingResponseDTO{
+    String userName;
+    String userLastName;
+    LocalDateTime startTime;
+    LocalDateTime endTime;
 }

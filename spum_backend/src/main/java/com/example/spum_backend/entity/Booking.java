@@ -3,6 +3,7 @@ package com.example.spum_backend.entity;
 import com.example.spum_backend.enumeration.BookingStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bookings")
+@Builder
 public class Booking {
 
     @Id

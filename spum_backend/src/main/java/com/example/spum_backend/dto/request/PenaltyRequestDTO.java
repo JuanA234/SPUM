@@ -1,6 +1,17 @@
 package com.example.spum_backend.dto.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
-public record PenaltyRequestDTO(String description, LocalDateTime penaltyDate, Long penaltyType, String email) {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PenaltyRequestDTO {
+    String description;
+    LocalDateTime penaltyDate;
+    Long penaltyType;
+    String email;
 }

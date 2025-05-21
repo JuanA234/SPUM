@@ -1,4 +1,13 @@
 package com.example.spum_backend.dto.response;
 
-public record TokenResponseDTO(String token) {
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TokenResponseDTO{
+    String token;
 }

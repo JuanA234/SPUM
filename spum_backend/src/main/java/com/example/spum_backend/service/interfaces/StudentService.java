@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface StudentService {
 
-    StudentResponseDTO registerAStudent(StudentUserRegisterRequestDTO student);
+
     void deleteStudent(String studentId);
     Optional<StudentResponseDTO> getStudent(String studentId);
     List<StudentResponseDTO> getAllStudents();

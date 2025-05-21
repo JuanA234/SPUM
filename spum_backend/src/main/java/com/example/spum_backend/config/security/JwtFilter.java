@@ -1,7 +1,6 @@
-package com.example.spum_backend.config;
+package com.example.spum_backend.config.security;
 
 
-import com.example.spum_backend.config.security.UserDetailServiceApp;
 import com.example.spum_backend.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

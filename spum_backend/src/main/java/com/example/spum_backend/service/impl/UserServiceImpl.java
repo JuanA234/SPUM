@@ -1,4 +1,8 @@
 package com.example.spum_backend.service.impl;
 
-public class UserServiceImpl  {
+import com.example.spum_backend.service.interfaces.UserService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService {
 }
