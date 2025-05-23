@@ -24,8 +24,8 @@ public class ScheduledTask {
 
 
 
-    @Scheduled(cron = "0 */1 * * * *")
-    public void scheduledTask() {
+    @Scheduled(cron = "30 */5 * * * *")
+    public void handleBookingsSoonToEnd() {
         List<Booking> bookingToEnd = bookingService.getAllBookingsSoonToEnd();
         // Send email
 
@@ -40,7 +40,7 @@ public class ScheduledTask {
         }
     }
 
-    @Scheduled(cron = "30 */1 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void handleBookingsWithNoProcessing() {
         bookingService.getBookingsWithNoProcessing();
     }
