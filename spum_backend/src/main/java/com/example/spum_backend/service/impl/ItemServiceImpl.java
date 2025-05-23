@@ -10,6 +10,7 @@ import com.example.spum_backend.repository.ItemRepository;
 import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemService;
 import com.example.spum_backend.service.interfaces.internal.ItemServiceEntity;
+import com.example.spum_backend.service.interfaces.internal.ItemTypeServiceEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,13 @@ public class ItemServiceImpl implements ItemService, ItemServiceEntity {
     private final ItemRepository itemRepository;
     private final ModelMapper modelMapper;
     private final ItemTypeRepository itemTypeRepository;
+    private final ItemTypeServiceEntity itemTypeService;
 
-    public ItemServiceImpl(ItemRepository itemRepository, ModelMapper modelMapper, ItemTypeRepository itemTypeRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, ModelMapper modelMapper, ItemTypeRepository itemTypeRepository, ItemTypeServiceEntity itemTypeService) {
         this.itemRepository = itemRepository;
         this.modelMapper = modelMapper;
         this.itemTypeRepository = itemTypeRepository;
+        this.itemTypeService = itemTypeService;
     }
 
     @Override
@@ -39,8 +42,7 @@ public class ItemServiceImpl implements ItemService, ItemServiceEntity {
 
     @Override
     public ItemResponseDTO findItemById(Long id) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException("Item with id "+ id +" Not found"));
+        Item item = getItemById(id);
         return modelMapper.map(item, ItemResponseDTO.class);
     }
 
@@ -49,8 +51,8 @@ public class ItemServiceImpl implements ItemService, ItemServiceEntity {
         Item itemToSave = modelMapper.map(item, Item.class);
 
         // Look for the item type
-        ItemType itemType = itemTypeRepository.findById(item.getItemType())
-                .orElseThrow(() -> new ItemTypeNotFoundException("Item type not found"));
+        ItemType itemType = itemTypeService.getItemTypeById(item.getItemType());
+
         itemToSave.setItemType(itemType);
 
         return modelMapper.map(itemRepository.save(itemToSave), ItemResponseDTO.class);
@@ -58,8 +60,7 @@ public class ItemServiceImpl implements ItemService, ItemServiceEntity {
 
     @Override
     public void deleteItemById(Long id) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException("Item with id "+ id +" Not found"));
+        Item item = getItemById(id);
         itemRepository.delete(item);
     }
 

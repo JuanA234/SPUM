@@ -13,5 +13,4 @@ public class BookingRequestDTO {
     LocalDateTime startTime;
     Long itemId;
     String email;
-    Long userId;
 }

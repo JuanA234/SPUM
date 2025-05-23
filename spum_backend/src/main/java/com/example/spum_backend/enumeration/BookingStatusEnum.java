@@ -7,7 +7,9 @@ public enum BookingStatusEnum {
 
     BOOKED("BOOKED"),
     IN_PROCESS("IN_PROCESS"),
-    RETURNED("RETURNED");
+    RETURNED("RETURNED"),
+    IN_PROCESS_OF_RETURN("IN_PROCESS_OF_RETURN"),
+    CANCELLED("CANCELLED");
 
     private final String bookingStatus;
 

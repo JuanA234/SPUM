@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface PenaltyRepository extends JpaRepository<Penalty, Long> {
 
-    @Query("select p from Penalty p join Student s on s.studentId = p.student.studentId join User u on u.userId = s.user.userId where u.userId =: userId and p.penaltyEndDate <: startDate")
-    Optional<Penalty> findActivePenalizations(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate);
+    @Query("select p from Penalty p join Student s on s.studentId = p.student.studentId join User u on u.userId = s.user.userId where u.userId =:idUser and p.penaltyEndDate <:bookingStartDate")
+    Optional<Penalty> findActivePenalizations(Long idUser, LocalDateTime bookingStartDate);
 
 }

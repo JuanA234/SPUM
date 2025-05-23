@@ -56,7 +56,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/mail/**").permitAll()
                                 .requestMatchers("/items/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/categories/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/booking/**").hasAuthority("ROLE_STUDENT")
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

@@ -12,7 +12,7 @@ import lombok.*;
 public class ItemType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long itemTypeId;
 
     private String itemTypeName;

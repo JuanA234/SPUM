@@ -8,7 +8,9 @@ import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemTypeService;
 import com.example.spum_backend.service.interfaces.internal.ItemTypeServiceEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEntity {
 
     private final ModelMapper modelMapper;
@@ -20,9 +22,10 @@ public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEnti
     }
 
     @Override
-    public ItemTypeDTO addItemType(String itemTypeName) {
-        ItemType itemType = ItemType.builder()
-                .itemTypeName(itemTypeName)
+    public ItemTypeDTO addItemType(ItemTypeDTO itemTypeName) {
+        ItemType itemType = ItemType
+                .builder()
+                .itemTypeName(itemTypeName.getItemTypeName())
                 .build();
         return modelMapper.map(itemTypeRepository.save(itemType), ItemTypeDTO.class);
     }
