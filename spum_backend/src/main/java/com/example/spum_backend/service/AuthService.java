@@ -100,7 +100,7 @@ public class AuthService {
             )
         );
 
-        return new TokenResponseDTO(jwtService.getToken(user));
+        return new TokenResponseDTO(jwtService.getToken(user),user.getRole());
 
     }
 
