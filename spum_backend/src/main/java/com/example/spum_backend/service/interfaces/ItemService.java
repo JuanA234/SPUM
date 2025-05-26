@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface ItemService {
     List<ItemResponseDTO> findAllItems();
     ItemResponseDTO findItemById(Long id);
+    List<ItemResponseDTO> findItemByName(String nombre);
     ItemResponseDTO addItem(ItemRequestDTO item);
     void deleteItemById(Long id);
 

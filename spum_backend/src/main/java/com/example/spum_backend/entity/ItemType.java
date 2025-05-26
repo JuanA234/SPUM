@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = "item")
 @Table(name = "item_types")
 public class ItemType {
 
