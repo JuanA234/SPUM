@@ -1,16 +1,13 @@
 package com.example.spum_backend.service.impl;
 
 import com.example.spum_backend.dto.request.PenaltyRequestDTO;
+import com.example.spum_backend.dto.request.PenaltyUserRequestDTO;
 import com.example.spum_backend.dto.response.PenaltyResponseDTO;
 import com.example.spum_backend.entity.Penalty;
 import com.example.spum_backend.entity.PenaltyType;
 import com.example.spum_backend.entity.Student;
 import com.example.spum_backend.exception.PenaltyNotFoundException;
-import com.example.spum_backend.exception.PenaltyTypeNotFoundException;
-import com.example.spum_backend.exception.StudentNotFoundException;
 import com.example.spum_backend.repository.PenaltyRepository;
-import com.example.spum_backend.repository.PenaltyTypeRepository;
-import com.example.spum_backend.repository.StudentRepository;
 import com.example.spum_backend.service.interfaces.PenaltyService;
 import com.example.spum_backend.service.interfaces.internal.PenaltyServiceEntity;
 import com.example.spum_backend.service.interfaces.internal.PenaltyTypeServiceEntity;
@@ -56,10 +53,15 @@ public class PenaltyServiceImpl implements PenaltyService, PenaltyServiceEntity 
 
         PenaltyType penaltyType = penaltyTypeServiceEntity.getPenaltyTypeEntityById(penaltyRequestDTO.getPenaltyType());
 
+        // depending on the penalty type different times
+
+
+
         // Applying the penalty.
 
         Penalty penalty = Penalty.builder()
                 .penaltyDate(penaltyRequestDTO.getPenaltyDate())
+                .penaltyEndDate(penaltyRequestDTO.getPenaltyDate().plusDays(penaltyType.getPenaltyDays()))
                 .description(penaltyRequestDTO.getDescription())
                 .type(penaltyType)
                 .student(student)
@@ -71,6 +73,18 @@ public class PenaltyServiceImpl implements PenaltyService, PenaltyServiceEntity 
     @Override
     public void deletePenalty(Long id) {
         Penalty penalty = getPenaltyById(id);
+        penaltyRepository.delete(penalty);
+    }
+
+    @Override
+    public void removePenaltyFromUser(PenaltyUserRequestDTO penaltyUserRequestDTO) {
+
+        Student student = studentServiceEntity.findStudentByEmail(penaltyUserRequestDTO.getEmail());
+        Penalty penalty = getPenaltyById(penaltyUserRequestDTO.getPenaltyId());
+
+        student.getPenalties().remove(penalty);
+        penalty.setStudent(null);
+
         penaltyRepository.delete(penalty);
     }
 

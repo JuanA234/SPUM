@@ -56,10 +56,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/mail/**").permitAll()
-                                .requestMatchers("/items/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/items/add").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/categories/**").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("/booking/**").hasAuthority("ROLE_STUDENT")
+                                .requestMatchers("/penalty-types/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("penalties/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_ASSISTANT")
+                                .requestMatchers("/bookings/add").hasAnyAuthority("ROLE_STUDENT","ROLE_ASSISTANT")
+                                .requestMatchers("/bookings/update-status").hasAnyAuthority("ROLE_ASSISTANT")
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

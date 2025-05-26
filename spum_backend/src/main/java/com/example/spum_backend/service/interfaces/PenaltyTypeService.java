@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface PenaltyTypeService {
 
-    String addPenaltyType(String penaltyTypeToSave);
-    List<String> getAllPenaltyTypes();
+    PenaltyTypeDTO addPenaltyType(PenaltyTypeDTO penaltyTypeToSave);
+    List<PenaltyTypeDTO> getAllPenaltyTypes();
     void deletePenaltyType(Long id);
-    String getPenaltyTypeById(Long id);
-    String updatePenaltyType(Long id, PenaltyTypeDTO penaltyTypeDTO);
+    PenaltyTypeDTO getPenaltyTypeById(Long id);
+    PenaltyTypeDTO updatePenaltyType(Long id, PenaltyTypeDTO penaltyTypeDTO);
 }

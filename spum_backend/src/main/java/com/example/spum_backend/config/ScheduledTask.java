@@ -1,8 +1,6 @@
 package com.example.spum_backend.config;
 
-import com.example.spum_backend.dto.response.BookingResponseDTO;
 import com.example.spum_backend.entity.Booking;
-import com.example.spum_backend.service.interfaces.BookingService;
 import com.example.spum_backend.service.interfaces.internal.BookingServiceEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -43,6 +41,11 @@ public class ScheduledTask {
     @Scheduled(cron = "0 */1 * * * *")
     public void handleBookingsWithNoProcessing() {
         bookingService.getBookingsWithNoProcessing();
+    }
+
+    @Scheduled(cron = "0 0 18 * * *")
+    public void handleNoReturnedArticles() {
+        bookingService.BookingsNoReturned();
     }
 
 }

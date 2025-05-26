@@ -20,4 +20,6 @@ public class PenaltyType {
 
     private String penaltyType;
 
+    private int penaltyDays;
+
 }

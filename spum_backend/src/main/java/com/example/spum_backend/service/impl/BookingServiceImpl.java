@@ -1,6 +1,8 @@
 package com.example.spum_backend.service.impl;
 
 import com.example.spum_backend.dto.request.BookingRequestDTO;
+import com.example.spum_backend.dto.request.BookingUpdateStatusRequestDTO;
+import com.example.spum_backend.dto.request.PenaltyRequestDTO;
 import com.example.spum_backend.dto.response.BookingResponseDTO;
 import com.example.spum_backend.entity.Booking;
 import com.example.spum_backend.entity.Item;
@@ -11,6 +13,7 @@ import com.example.spum_backend.exception.BookingConflict;
 import com.example.spum_backend.exception.BookingNotFoundException;
 import com.example.spum_backend.repository.BookingRepository;
 import com.example.spum_backend.service.interfaces.BookingService;
+import com.example.spum_backend.service.interfaces.PenaltyService;
 import com.example.spum_backend.service.interfaces.internal.BookingServiceEntity;
 import com.example.spum_backend.service.interfaces.internal.ItemServiceEntity;
 import com.example.spum_backend.service.interfaces.internal.PenaltyServiceEntity;
@@ -33,14 +36,23 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
     private final PenaltyServiceEntity penaltyServiceEntity;
     private final StudentServiceEntity studentServiceEntity;
     private final ModelMapper modelMapper;
+    private final PenaltyService penaltyService;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, ItemServiceEntity itemServiceEntity, PenaltyServiceEntity penaltyServiceEntity, StudentServiceEntity studentServiceEntity, ModelMapper modelMapper) {
+    public BookingServiceImpl(BookingRepository bookingRepository, ItemServiceEntity itemServiceEntity, PenaltyServiceEntity penaltyServiceEntity, StudentServiceEntity studentServiceEntity, ModelMapper modelMapper, PenaltyService penaltyService) {
         this.bookingRepository = bookingRepository;
         this.itemServiceEntity = itemServiceEntity;
         this.penaltyServiceEntity = penaltyServiceEntity;
         this.studentServiceEntity = studentServiceEntity;
         this.modelMapper = modelMapper;
+        this.penaltyService = penaltyService;
     }
+
+    private long getClosingHour(){
+        ZoneId zoneId = ZoneId.of("America/Bogota");
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
+        return zonedDateTime.toInstant().toEpochMilli();
+    }
+
 
     @Override
     public BookingResponseDTO createBooking(BookingRequestDTO booking) {
@@ -68,7 +80,7 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
         Booking booking1 = Booking
                 .builder()
                 .startTime(booking.getStartTime())
-                .endTime(booking.getStartTime().plusMinutes(2L))
+                .endTime(booking.getStartTime().plusMinutes(10L))
                 .bookingStatus(BookingStatusEnum.IN_PROCESS)
                 .student(student)
                 .item(itemToBook)
@@ -90,9 +102,9 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
     }
 
     @Override
-    public void updateBookingStatus(Long id, BookingStatusEnum status) {
-        Booking bookingToUpdate = getBookingById(id);
-        bookingToUpdate.setBookingStatus(status);
+    public void updateBookingStatus(BookingUpdateStatusRequestDTO bookingUpdateStatusRequestDTO) {
+        Booking bookingToUpdate = getBookingById(bookingUpdateStatusRequestDTO.getBookingId());
+        bookingToUpdate.setBookingStatus(bookingUpdateStatusRequestDTO.getStatus());
         bookingRepository.save(bookingToUpdate);
     }
 
@@ -105,7 +117,7 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
         // Convert it to millis
         long timeNowMillis = System.currentTimeMillis();
 
-        int numberOfMinutes = (int) (2 * 0.9 );
+        int numberOfMinutes = (int) (10 * 0.9 );
 
         for (Booking booking : bookings) {
             // To the start date the 90%
@@ -131,8 +143,9 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
         // Convert it to millis
         long timeNowMillis = System.currentTimeMillis();
 
-        int numberOfMinutes = (int) (2 * 0.5 );
+        int numberOfMinutes = (int) (10 * 0.5 );
 
+        System.out.println(numberOfMinutes);
         for (Booking booking : bookings) {
             // To the start date the 90%
             LocalDateTime startTime = booking.getStartTime().plusMinutes(numberOfMinutes);
@@ -142,10 +155,21 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
 
             if((timeNowMillis >= time) && booking.getBookingStatus() == BookingStatusEnum.IN_PROCESS){ // Change for booked
                 // Time almost over or over by now
-                updateBookingStatus(booking.getBookingId(), BookingStatusEnum.CANCELLED);
+                updateBookingStatus(new BookingUpdateStatusRequestDTO(BookingStatusEnum.CANCELLED, booking.getBookingId()));
             }
         }
 
+    }
+
+    @Override
+    public void BookingsNoReturned() {
+        List<Booking> bookings = bookingRepository.findAll();
+        String description = "El estudiante no devolvió el articulo en el tiempo estipulado";
+        for (Booking booking : bookings) {
+            if(booking.getBookingStatus() == BookingStatusEnum.IN_PROCESS_OF_RETURN && System.currentTimeMillis() >= getClosingHour()){
+                penaltyService.createPenalty(new PenaltyRequestDTO(description, LocalDateTime.now(), 1L,booking.getStudent().getUser().getEmail()));
+            }
+        }
     }
 }
 

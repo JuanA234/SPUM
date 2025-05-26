@@ -1,4 +1,4 @@
-package com.example.spum_backend.dto;
+package com.example.spum_backend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PenaltyTypeDTO {
-    String penaltyType;
-    int penaltyDays;
+public class PenaltyUserRequestDTO {
+    String email;
+    Long penaltyId;
 }

@@ -6,6 +6,7 @@ import com.example.spum_backend.exception.PenaltyTypeNotFoundException;
 import com.example.spum_backend.repository.PenaltyTypeRepository;
 import com.example.spum_backend.service.interfaces.PenaltyTypeService;
 import com.example.spum_backend.service.interfaces.internal.PenaltyTypeServiceEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,16 +16,19 @@ import java.util.stream.Collectors;
 public class PenaltyTypeServiceImpl implements PenaltyTypeService, PenaltyTypeServiceEntity {
 
     private final PenaltyTypeRepository penaltyTypeRepository;
+    private final ModelMapper modelMapper;
 
-    public PenaltyTypeServiceImpl(PenaltyTypeRepository penaltyTypeRepository) {
+    public PenaltyTypeServiceImpl(PenaltyTypeRepository penaltyTypeRepository, ModelMapper modelMapper) {
         this.penaltyTypeRepository = penaltyTypeRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public String addPenaltyType(String penaltyTypeToSave) {
+    public PenaltyTypeDTO addPenaltyType(PenaltyTypeDTO penaltyTypeToSave) {
         PenaltyType penaltyType = PenaltyType
                 .builder()
-                .penaltyType(penaltyTypeToSave)
+                .penaltyType(penaltyTypeToSave.getPenaltyType())
+                .penaltyDays(penaltyTypeToSave.getPenaltyDays())
                 .build();
 
         penaltyTypeRepository.save(penaltyType);
@@ -32,9 +36,9 @@ public class PenaltyTypeServiceImpl implements PenaltyTypeService, PenaltyTypeSe
     }
 
     @Override
-    public List<String> getAllPenaltyTypes() {
+    public List<PenaltyTypeDTO> getAllPenaltyTypes() {
         return penaltyTypeRepository.findAll()
-                .stream().map(PenaltyType::getPenaltyType)
+                .stream().map((penaltyType -> modelMapper.map(penaltyType, PenaltyTypeDTO.class)))
                 .collect(Collectors.toList());
     }
 
@@ -48,22 +52,22 @@ public class PenaltyTypeServiceImpl implements PenaltyTypeService, PenaltyTypeSe
     }
 
     @Override
-    public String getPenaltyTypeById(Long id) {
+    public PenaltyTypeDTO getPenaltyTypeById(Long id) {
 
          PenaltyType penaltyType = penaltyTypeRepository.findById(id)
                 .orElseThrow(() -> new PenaltyTypeNotFoundException("Penalty type not found"));
 
-         return penaltyType.getPenaltyType();
+         return modelMapper.map(penaltyType, PenaltyTypeDTO.class);
     }
 
     @Override
-    public String updatePenaltyType(Long id, PenaltyTypeDTO penaltyTypeDTO) {
+    public PenaltyTypeDTO updatePenaltyType(Long id, PenaltyTypeDTO penaltyTypeDTO) {
 
         PenaltyType penaltyType = penaltyTypeRepository.findById(id)
                 .orElseThrow(() -> new PenaltyTypeNotFoundException("Penalty type not found"));
 
         penaltyType.setPenaltyType(penaltyTypeDTO.getPenaltyType());
-        return penaltyTypeRepository.save(penaltyType).getPenaltyType();
+        return modelMapper.map(penaltyTypeRepository.save(penaltyType), PenaltyTypeDTO.class);
     }
 
 
