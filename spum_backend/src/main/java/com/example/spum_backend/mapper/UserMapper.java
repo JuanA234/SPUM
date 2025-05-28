@@ -21,6 +21,7 @@ public interface UserMapper {
     @Mapping(target = "penalties", ignore = true)
     Student toStudent(StudentUserRegisterRequestDTO dto, User user);
 
+    @Mapping(target = "studentName", expression = "java(user.getUserName() + ' ' + user.getUserLastName())")
     StudentResponseDTO toStudentResponseDTO(User user);
 
     @Mapping(source = "id", target = "id")
