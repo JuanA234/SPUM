@@ -14,6 +14,7 @@ import com.example.spum_backend.enumeration.RolesEnum;
 import com.example.spum_backend.exception.UserAlreadyRegistered;
 import com.example.spum_backend.exception.UserLoginException;
 import com.example.spum_backend.exception.notFound.RoleNotFoundException;
+import com.example.spum_backend.mapper.StudentMapper;
 import com.example.spum_backend.mapper.UserMapper;
 import com.example.spum_backend.repository.RoleRepository;
 import com.example.spum_backend.repository.StudentRepository;
@@ -40,20 +41,21 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final StudentMapper studentMapper;
 
     public StudentResponseDTO registerStudent(StudentUserRegisterRequestDTO dto) {
         validateEmailNotRegistered(dto.getEmail());
 
         Role role = getRole(RolesEnum.STUDENT);
-        User user = userMapper.toUser(dto);
+        User user = studentMapper.toUser(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setRoles(Set.of(role));
         userRepository.save(user);
 
-        Student student = userMapper.toStudent(dto, user);
+        Student student = studentMapper.toStudent(dto, user);
         studentRepository.save(student);
 
-        return userMapper.toStudentResponseDTO(user);
+        return studentMapper.toStudentResponseDTO(user);
     }
 
     public UserInfo registerUser(UserRegisterRequestDTO dto) {
