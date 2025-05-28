@@ -12,5 +12,5 @@ public interface ItemMapper {
     ItemResponseDTO toDto(Item item);
 
     @Mapping(source = "itemType", target = "itemType.itemTypeId")
-    Item fromDto(ItemRequestDTO item);
+    Item toEntity(ItemRequestDTO item);
 }

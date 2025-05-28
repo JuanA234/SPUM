@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -58,6 +60,7 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/items/add").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/categories/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/penalty-types/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("penalties/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_ASSISTANT")
                                 .requestMatchers("/bookings/add").hasAnyAuthority("ROLE_STUDENT","ROLE_ASSISTANT")

@@ -4,11 +4,9 @@ import com.example.spum_backend.dto.request.ItemRequestDTO;
 import com.example.spum_backend.dto.response.ItemResponseDTO;
 import com.example.spum_backend.entity.Item;
 import com.example.spum_backend.entity.ItemType;
-import com.example.spum_backend.exception.ItemNotFoundException;
-import com.example.spum_backend.exception.ItemTypeNotFoundException;
+import com.example.spum_backend.exception.notFound.ItemNotFoundException;
 import com.example.spum_backend.mapper.ItemMapper;
 import com.example.spum_backend.repository.ItemRepository;
-import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemService;
 import com.example.spum_backend.service.interfaces.internal.ItemServiceEntity;
 import com.example.spum_backend.service.interfaces.internal.ItemTypeServiceEntity;
@@ -17,8 +15,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor

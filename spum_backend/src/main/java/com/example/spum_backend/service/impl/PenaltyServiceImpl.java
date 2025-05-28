@@ -6,7 +6,7 @@ import com.example.spum_backend.dto.response.PenaltyResponseDTO;
 import com.example.spum_backend.entity.Penalty;
 import com.example.spum_backend.entity.PenaltyType;
 import com.example.spum_backend.entity.Student;
-import com.example.spum_backend.exception.PenaltyNotFoundException;
+import com.example.spum_backend.exception.notFound.PenaltyNotFoundException;
 import com.example.spum_backend.repository.PenaltyRepository;
 import com.example.spum_backend.service.interfaces.PenaltyService;
 import com.example.spum_backend.service.interfaces.internal.PenaltyServiceEntity;

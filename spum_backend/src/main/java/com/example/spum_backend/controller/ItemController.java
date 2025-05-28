@@ -34,7 +34,7 @@ public class ItemController {
         return itemService.findItemById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ItemResponseDTO addItem(@RequestBody ItemRequestDTO itemRequestDTO) {
         return itemService.addItem(itemRequestDTO);
     }

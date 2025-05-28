@@ -28,7 +28,7 @@ public class Item {
     @JoinColumn(name = "itemTypeId", referencedColumnName = "itemTypeId")
     private ItemType itemType;
 
-    @OneToMany
+    @OneToMany(mappedBy = "item")
     private List<Booking> bookings;
 
 }

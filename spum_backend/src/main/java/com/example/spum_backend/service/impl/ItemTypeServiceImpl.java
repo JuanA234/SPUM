@@ -2,8 +2,7 @@ package com.example.spum_backend.service.impl;
 
 import com.example.spum_backend.dto.ItemTypeDTO;
 import com.example.spum_backend.entity.ItemType;
-import com.example.spum_backend.exception.ItemNotFoundException;
-import com.example.spum_backend.exception.ItemTypeNotFoundException;
+import com.example.spum_backend.exception.notFound.ItemTypeNotFoundException;
 import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemTypeService;
 import com.example.spum_backend.service.interfaces.internal.ItemTypeServiceEntity;

@@ -17,12 +17,12 @@ public class PenaltyTypeController {
         this.penaltyTypeService = penaltyTypeService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<PenaltyTypeDTO> getAllPenalties() {
         return penaltyTypeService.getAllPenaltyTypes();
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public PenaltyTypeDTO addPenaltyType(@RequestBody PenaltyTypeDTO itemType) {
         return penaltyTypeService.addPenaltyType(itemType);
     }
