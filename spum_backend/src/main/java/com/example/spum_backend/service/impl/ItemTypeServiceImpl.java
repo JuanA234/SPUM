@@ -19,7 +19,7 @@ public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEnti
     private final ItemTypeRepository itemTypeRepository;
     private final itemTypeMapper itemTypeMapper;
 
-    public ItemTypeServiceImpl(ModelMapper modelMapper, ItemTypeRepository itemTypeRepository, itemTypeMapper itemTypeMapper) {
+    public ItemTypeServiceImpl(ItemTypeRepository itemTypeRepository, itemTypeMapper itemTypeMapper) {
         this.itemTypeRepository = itemTypeRepository;
         this.itemTypeMapper = itemTypeMapper;
     }
@@ -56,6 +56,7 @@ public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEnti
         return itemTypeMapper.toDTO(getItemTypeById(id));
     }
 
+    @Override
     public ItemType getItemTypeById(Long id) {
         return itemTypeRepository.findById(id)
                 .orElseThrow(() -> new ItemTypeNotFoundException("Item Type Not Found"));

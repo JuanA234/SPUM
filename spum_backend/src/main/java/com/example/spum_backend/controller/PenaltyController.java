@@ -1,6 +1,7 @@
 package com.example.spum_backend.controller;
 
 import com.example.spum_backend.dto.request.PenaltyRequestDTO;
+import com.example.spum_backend.dto.request.PenaltyUserRequestDTO;
 import com.example.spum_backend.dto.response.PenaltyResponseDTO;
 import com.example.spum_backend.service.interfaces.PenaltyService;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,26 @@ public class PenaltyController {
         return ResponseEntity.ok(penaltyService.getAllPenalties());
     }
 
-    @PostMapping("")
-    public void addPenalty(@RequestBody PenaltyRequestDTO penalty) {
-        penaltyService.createPenalty(penalty);
+    @PostMapping
+    public ResponseEntity<PenaltyResponseDTO> addPenalty(@RequestBody PenaltyRequestDTO penalty) {
+        return ResponseEntity.ok(penaltyService.createPenalty(penalty));
     }
-    
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletePenalty(@PathVariable Long id) {
+        penaltyService.deletePenalty(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> removePenaltyFromUser(@RequestBody PenaltyUserRequestDTO penalty) {
+        penaltyService.removePenaltyFromUser(penalty);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<PenaltyResponseDTO> updatePenalty(@PathVariable Long id, @RequestBody PenaltyRequestDTO penalty) {
+        return ResponseEntity.ok(penaltyService.updatePenalty(id, penalty));
+    }
 
 }

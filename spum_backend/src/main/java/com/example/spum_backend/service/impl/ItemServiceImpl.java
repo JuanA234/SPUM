@@ -54,7 +54,7 @@ public class ItemServiceImpl implements ItemService, ItemServiceEntity {
     }
     @Override
     public ItemResponseDTO addItem(ItemRequestDTO item) {
-        Item itemToSave = modelMapper.map(item, Item.class);
+        Item itemToSave = itemMapper.toEntity(item);
 
         // Look for the item type
         ItemType itemType = itemTypeService.getItemTypeById(item.getItemType());
