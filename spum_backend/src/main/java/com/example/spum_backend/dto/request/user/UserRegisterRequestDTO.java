@@ -1,4 +1,4 @@
-package com.example.spum_backend.dto.request;
+package com.example.spum_backend.dto.request.user;
 
 import com.example.spum_backend.enumeration.RolesEnum;
 import jakarta.validation.constraints.Email;

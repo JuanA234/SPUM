@@ -1,7 +1,7 @@
 package com.example.spum_backend.mapper;
 
-import com.example.spum_backend.dto.request.BookingCreateRequestDTO;
-import com.example.spum_backend.dto.request.BookingUpdateRequestDTO;
+import com.example.spum_backend.dto.request.booking.BookingCreateRequestDTO;
+import com.example.spum_backend.dto.request.booking.BookingUpdateRequestDTO;
 import com.example.spum_backend.dto.response.BookingResponseDTO;
 import com.example.spum_backend.entity.Booking;
 import org.mapstruct.*;

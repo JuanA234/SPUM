@@ -1,8 +1,8 @@
 package com.example.spum_backend.service;
 
 import com.example.spum_backend.config.security.services.UserDetailServiceApp;
-import com.example.spum_backend.dto.request.UserLoginRequestDTO;
-import com.example.spum_backend.dto.request.UserRegisterRequestDTO;
+import com.example.spum_backend.dto.request.user.UserLoginRequestDTO;
+import com.example.spum_backend.dto.request.user.UserRegisterRequestDTO;
 import com.example.spum_backend.dto.response.TokenResponseDTO;
 import com.example.spum_backend.dto.response.UserInfo;
 import com.example.spum_backend.entity.Role;
@@ -13,13 +13,11 @@ import com.example.spum_backend.exception.UserLoginException;
 import com.example.spum_backend.mapper.UserMapper;
 import com.example.spum_backend.repository.RoleRepository;
 import com.example.spum_backend.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

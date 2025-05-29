@@ -1,6 +1,7 @@
 package com.example.spum_backend.mapper;
 
-import com.example.spum_backend.dto.request.UserRegisterRequestDTO;
+import com.example.spum_backend.dto.request.user.UserRegisterRequestDTO;
+import com.example.spum_backend.dto.request.user.UserUpdateRequestDTO;
 import com.example.spum_backend.dto.response.UserInfo;
 import com.example.spum_backend.entity.User;
 import org.mapstruct.*;
@@ -20,4 +21,7 @@ public interface UserMapper {
     @Mapping(source = "email", target = "email")
     @Mapping(target = "role", expression = "java(user.getRoles().stream().findFirst().orElseThrow().getRole().name())")
     UserInfo toUserInfo(User user);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromDto(UserUpdateRequestDTO dto, @MappingTarget User user);
 }
