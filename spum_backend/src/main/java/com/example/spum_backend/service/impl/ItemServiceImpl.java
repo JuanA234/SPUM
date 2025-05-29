@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class ItemServiceImpl implements ItemService, ItemServiceEntity {
 
     private final ItemRepository itemRepository;
-    private final ModelMapper modelMapper;
     private final ItemMapper itemMapper;
     private final ItemTypeServiceEntity itemTypeService;
     private final ItemTypeRepository itemTypeRepository;
@@ -38,8 +37,9 @@ public class ItemServiceImpl implements ItemService, ItemServiceEntity {
 
     @Override
     public ItemResponseDTO findItemById(Long id) {
-        Item item = getItemById(id);
-        return modelMapper.map(item, ItemResponseDTO.class);
+        return itemRepository.findById(id)
+                .map(itemMapper::toDto)
+                .orElseThrow(()-> new ItemNotFoundException("Item not found"));
     }
 
     @Override

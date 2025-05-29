@@ -1,17 +1,16 @@
 package com.example.spum_backend.service.impl;
 
-import com.example.spum_backend.dto.ItemTypeDTO;
+import com.example.spum_backend.dto.request.ItemTypeDTO;
+import com.example.spum_backend.dto.response.ItemTypeResponseDTO;
 import com.example.spum_backend.entity.ItemType;
 import com.example.spum_backend.exception.notFound.ItemTypeNotFoundException;
 import com.example.spum_backend.mapper.itemTypeMapper;
 import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemTypeService;
 import com.example.spum_backend.service.interfaces.internal.ItemTypeServiceEntity;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEntity {
@@ -25,7 +24,7 @@ public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEnti
     }
 
     @Override
-    public ItemTypeDTO addItemType(ItemTypeDTO itemTypeDTO) {
+    public ItemTypeResponseDTO addItemType(ItemTypeDTO itemTypeDTO) {
         ItemType itemType = ItemType
                 .builder()
                 .itemTypeName(itemTypeDTO.getItemTypeName())
@@ -34,7 +33,7 @@ public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEnti
     }
 
     @Override
-    public ItemTypeDTO updateItemType(Long id, ItemTypeDTO idItemTypeDTO) {
+    public ItemTypeResponseDTO updateItemType(Long id, ItemTypeDTO idItemTypeDTO) {
         ItemType itemType = getItemTypeById(id);
 
         itemType.setItemTypeName(idItemTypeDTO.getItemTypeName());
@@ -47,12 +46,12 @@ public class ItemTypeServiceImpl implements ItemTypeService, ItemTypeServiceEnti
     }
 
     @Override
-    public List<ItemTypeDTO> getAllItemTypes() {
+    public List<ItemTypeResponseDTO> getAllItemTypes() {
         return itemTypeRepository.findAll().stream().map(itemTypeMapper::toDTO).toList();
     }
 
     @Override
-    public ItemTypeDTO findItemTypeById(Long id) {
+    public ItemTypeResponseDTO findItemTypeById(Long id) {
         return itemTypeMapper.toDTO(getItemTypeById(id));
     }
 

@@ -2,9 +2,7 @@ package com.example.spum_backend.controller;
 
 import com.example.spum_backend.dto.request.ItemRequestDTO;
 import com.example.spum_backend.dto.response.ItemResponseDTO;
-import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemService;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +40,7 @@ public class ItemController {
         return ResponseEntity.ok(itemService.findItemByItemType(id));
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ItemResponseDTO> addItem(@RequestBody ItemRequestDTO itemRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(itemService.addItem(itemRequestDTO));
     }

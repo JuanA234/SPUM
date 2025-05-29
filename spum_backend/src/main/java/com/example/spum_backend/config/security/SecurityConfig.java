@@ -2,6 +2,7 @@ package com.example.spum_backend.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -58,7 +59,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/items/add").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/items/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_ASSISTANT")
+                                .requestMatchers(HttpMethod.GET, "/items/type/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_ASSISTANT")
+                                .requestMatchers(HttpMethod.GET, "/items/search/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_ASSISTANT")
+                                .requestMatchers(HttpMethod.GET, "/categories").hasAnyAuthority("ROLE_STUDENT", "ROLE_ASSISTANT")
+                                .requestMatchers("/items/**").hasAuthority("ROLE_ASSISTANT")
                                 .requestMatchers("/categories/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/penalty-types/**").hasAuthority("ROLE_ADMIN")

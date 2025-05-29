@@ -1,5 +1,6 @@
-package com.example.spum_backend.dto;
+package com.example.spum_backend.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemTypeDTO {
-    String itemTypeName;
+    @NotBlank String itemTypeName;
 }

@@ -1,8 +1,9 @@
 package com.example.spum_backend.controller;
 
-import com.example.spum_backend.dto.ItemTypeDTO;
-import com.example.spum_backend.entity.ItemType;
+import com.example.spum_backend.dto.request.ItemTypeDTO;
+import com.example.spum_backend.dto.response.ItemTypeResponseDTO;
 import com.example.spum_backend.service.interfaces.ItemTypeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+@CrossOrigin(value = "http://localhost:5173")
 public class ItemTypeController {
 
     private final ItemTypeService itemTypeService;
@@ -19,23 +21,23 @@ public class ItemTypeController {
         this.itemTypeService = itemTypeService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<ItemTypeDTO> addItemType(@RequestBody ItemTypeDTO itemType) {
+    @PostMapping
+    public ResponseEntity<ItemTypeResponseDTO> addItemType(@RequestBody @Valid ItemTypeDTO itemType) {
         return ResponseEntity.status(HttpStatus.CREATED).body(itemTypeService.addItemType(itemType));
     }
 
     @GetMapping
-    public ResponseEntity<List<ItemTypeDTO>> getAllItemsType() {
+    public ResponseEntity<List<ItemTypeResponseDTO>> getAllItemsType() {
         return ResponseEntity.ok(itemTypeService.getAllItemTypes());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ItemTypeDTO> getItemTypeById(@PathVariable Long id) {
+    public ResponseEntity<ItemTypeResponseDTO> getItemTypeById(@PathVariable Long id) {
         return ResponseEntity.ok(itemTypeService.findItemTypeById(id));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ItemTypeDTO> updateItemType(@PathVariable Long id, @RequestBody ItemTypeDTO itemType) {
+    public ResponseEntity<ItemTypeResponseDTO> updateItemType(@PathVariable Long id, @RequestBody ItemTypeDTO itemType) {
         return ResponseEntity.ok(itemTypeService.updateItemType(id, itemType));
     }
 

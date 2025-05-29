@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemResponseDTO{
-    String itemId;
-    String itemName;
-    String itemDescription;
-    Long itemQuantity;
-    ItemTypeResponseDTO itemType;;
+public class ItemTypeResponseDTO {
+
+     Long itemTypeId;
+
+     String itemTypeName;
+
+
 }

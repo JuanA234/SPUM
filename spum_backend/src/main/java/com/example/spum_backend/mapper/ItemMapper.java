@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
-    @Mapping(source = "itemType.itemTypeId", target = "itemType")
+    @Mapping(source = "itemType", target = "itemType")
     ItemResponseDTO toDto(Item item);
 
     @Mapping(source = "itemType", target = "itemType.itemTypeId")

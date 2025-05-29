@@ -1,15 +1,15 @@
 package com.example.spum_backend.service.interfaces;
 
-import com.example.spum_backend.dto.ItemTypeDTO;
-import com.example.spum_backend.entity.ItemType;
+import com.example.spum_backend.dto.request.ItemTypeDTO;
+import com.example.spum_backend.dto.response.ItemTypeResponseDTO;
 
 import java.util.List;
 
 public interface ItemTypeService {
 
-    ItemTypeDTO addItemType(ItemTypeDTO itemTypeDTO);
-    ItemTypeDTO updateItemType(Long id, ItemTypeDTO itemTypeDTO);
+    ItemTypeResponseDTO addItemType(ItemTypeDTO itemTypeDTO);
+    ItemTypeResponseDTO updateItemType(Long id, ItemTypeDTO itemTypeDTO);
     void deleteItemType(Long id);
-    List<ItemTypeDTO> getAllItemTypes();
-    ItemTypeDTO findItemTypeById(Long id);
+    List<ItemTypeResponseDTO> getAllItemTypes();
+    ItemTypeResponseDTO findItemTypeById(Long id);
 }
