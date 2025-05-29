@@ -24,7 +24,7 @@ public class Item {
     private String itemDescription;
     private Long itemQuantity;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "itemTypeId", referencedColumnName = "itemTypeId")
     private ItemType itemType;
 

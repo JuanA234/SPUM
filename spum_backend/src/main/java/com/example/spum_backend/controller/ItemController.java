@@ -2,7 +2,10 @@ package com.example.spum_backend.controller;
 
 import com.example.spum_backend.dto.request.ItemRequestDTO;
 import com.example.spum_backend.dto.response.ItemResponseDTO;
+import com.example.spum_backend.repository.ItemTypeRepository;
 import com.example.spum_backend.service.interfaces.ItemService;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +23,8 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemResponseDTO> getAllItems() {
-        return itemService.findAllItems();
+    public ResponseEntity<List<ItemResponseDTO>> getAllItems() {
+        return ResponseEntity.ok(itemService.findAllItems());
     }
 
     @GetMapping("/search")
@@ -29,13 +32,29 @@ public class ItemController {
         return ResponseEntity.ok(itemService.findItemByName(name));
     }
 
-    @GetMapping("/{id:\\d+}")
-    public ItemResponseDTO getItemById(@PathVariable Long id) {
-        return itemService.findItemById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<ItemResponseDTO> getItemById(@PathVariable Long id) {
+        return ResponseEntity.ok(itemService.findItemById(id));
     }
 
-    @PostMapping
-    public ItemResponseDTO addItem(@RequestBody ItemRequestDTO itemRequestDTO) {
-        return itemService.addItem(itemRequestDTO);
+    @GetMapping("/type/{id}")
+    public ResponseEntity<List<ItemResponseDTO>> getItemByItemTypeName(@PathVariable Long id) {
+        return ResponseEntity.ok(itemService.findItemByItemType(id));
+    }
+
+    @PostMapping()
+    public ResponseEntity<ItemResponseDTO> addItem(@RequestBody ItemRequestDTO itemRequestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.addItem(itemRequestDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ItemResponseDTO> updateItem(@PathVariable Long id, @RequestBody ItemRequestDTO itemRequestDTO) {
+        return ResponseEntity.ok(itemService.updateItem(id, itemRequestDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteItemById(@PathVariable Long id) {
+        itemService.deleteItemById(id);
+        return ResponseEntity.noContent().build();
     }
 }
