@@ -1,12 +1,11 @@
 package com.example.spum_backend.service.impl;
 
-import com.example.spum_backend.dto.request.BookingCreateRequestDTO;
-import com.example.spum_backend.dto.request.BookingUpdateRequestDTO;
+import com.example.spum_backend.dto.request.booking.BookingCreateRequestDTO;
+import com.example.spum_backend.dto.request.booking.BookingUpdateRequestDTO;
 import com.example.spum_backend.dto.request.PenaltyRequestDTO;
 import com.example.spum_backend.dto.response.BookingResponseDTO;
 import com.example.spum_backend.entity.Booking;
 import com.example.spum_backend.entity.Item;
-import com.example.spum_backend.entity.Penalty;
 import com.example.spum_backend.entity.Student;
 import com.example.spum_backend.enumeration.BookingStatusEnum;
 import com.example.spum_backend.exception.BookingConflict;
@@ -20,15 +19,12 @@ import com.example.spum_backend.service.interfaces.internal.ItemServiceEntity;
 import com.example.spum_backend.service.interfaces.internal.PenaltyServiceEntity;
 import com.example.spum_backend.service.interfaces.internal.StudentServiceEntity;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

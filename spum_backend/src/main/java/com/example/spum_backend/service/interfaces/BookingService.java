@@ -1,12 +1,9 @@
 package com.example.spum_backend.service.interfaces;
 
-import com.example.spum_backend.dto.request.BookingCreateRequestDTO;
-import com.example.spum_backend.dto.request.BookingUpdateRequestDTO;
+import com.example.spum_backend.dto.request.booking.BookingCreateRequestDTO;
+import com.example.spum_backend.dto.request.booking.BookingUpdateRequestDTO;
 import com.example.spum_backend.dto.response.BookingResponseDTO;
-import com.example.spum_backend.enumeration.BookingStatusEnum;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 

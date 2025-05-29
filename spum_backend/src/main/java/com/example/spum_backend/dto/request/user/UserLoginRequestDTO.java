@@ -1,4 +1,4 @@
-package com.example.spum_backend.dto.request;
+package com.example.spum_backend.dto.request.user;
 
 
 import jakarta.validation.constraints.NotBlank;

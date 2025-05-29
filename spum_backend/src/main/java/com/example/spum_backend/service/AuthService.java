@@ -2,8 +2,8 @@ package com.example.spum_backend.service;
 
 import com.example.spum_backend.config.security.services.UserDetailServiceApp;
 import com.example.spum_backend.dto.request.StudentUserRegisterRequestDTO;
-import com.example.spum_backend.dto.request.UserLoginRequestDTO;
-import com.example.spum_backend.dto.request.UserRegisterRequestDTO;
+import com.example.spum_backend.dto.request.user.UserLoginRequestDTO;
+import com.example.spum_backend.dto.request.user.UserRegisterRequestDTO;
 import com.example.spum_backend.dto.response.StudentResponseDTO;
 import com.example.spum_backend.dto.response.TokenResponseDTO;
 import com.example.spum_backend.dto.response.UserInfo;
