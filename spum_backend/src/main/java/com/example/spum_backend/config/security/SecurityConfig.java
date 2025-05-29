@@ -68,7 +68,7 @@ public class SecurityConfig {
                                 .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/penalty-types/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("penalties/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_ASSISTANT")
-                                .requestMatchers("/bookings/add").hasAnyAuthority("ROLE_STUDENT","ROLE_ASSISTANT")
+                                .requestMatchers(HttpMethod.POST,"/bookings").hasAnyAuthority("ROLE_STUDENT","ROLE_ASSISTANT")
                                 .requestMatchers("/bookings/update-status").hasAnyAuthority("ROLE_ASSISTANT")
                                 .anyRequest().authenticated()
                 )
