@@ -3,6 +3,7 @@ package com.example.spum_backend.service.interfaces;
 import com.example.spum_backend.dto.request.booking.BookingCreateRequestDTO;
 import com.example.spum_backend.dto.request.booking.BookingUpdateRequestDTO;
 import com.example.spum_backend.dto.response.BookingResponseDTO;
+import com.example.spum_backend.dto.response.FileInfoResponseDTO;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface BookingService {
 
     // Opcional: métodos de negocio específicos, p.ej.:
     List<BookingResponseDTO> findBookingsByStudentEmail(String email);
+    FileInfoResponseDTO markABookingAsReturned(Long id);
 }

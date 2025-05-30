@@ -13,15 +13,15 @@ import java.util.Properties;
 
 @Configuration
 public class AppConfig {
-
-    @Value("${java.mail.username}")
-    private String username;
-    @Value("${java.mail.password}")
-    private String password;
-    @Value("${java.mail.port}")
-    private int port;
-    @Value("${java.mail.host}")
-    private String host;
+//
+//    @Value("${java.mail.username}")
+//    private String username;
+//    @Value("${java.mail.password}")
+//    private String password;
+//    @Value("${java.mail.port}")
+//    private int port;
+//    @Value("${java.mail.host}")
+//    private String host;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -31,23 +31,23 @@ public class AppConfig {
     }
 
 
-    @Bean
-    public JavaMailSender mailSender() {
-        System.out.println(username + " " + password + " " + host + " " + port);
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-
-        return mailSender;
-    }
+//    @Bean
+//    public JavaMailSender mailSender() {
+//        System.out.println(username + " " + password + " " + host + " " + port);
+//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+//        mailSender.setHost(host);
+//        mailSender.setPort(port);
+//        mailSender.setUsername(username);
+//        mailSender.setPassword(password);
+//
+//        Properties props = mailSender.getJavaMailProperties();
+//        props.put("mail.transport.protocol", "smtp");
+//        props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.starttls.enable", "true");
+//        props.put("mail.debug", "true");
+//
+//        return mailSender;
+//    }
 
 
 

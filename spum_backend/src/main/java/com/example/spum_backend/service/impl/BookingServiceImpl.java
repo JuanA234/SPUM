@@ -4,6 +4,7 @@ import com.example.spum_backend.dto.request.booking.BookingCreateRequestDTO;
 import com.example.spum_backend.dto.request.booking.BookingUpdateRequestDTO;
 import com.example.spum_backend.dto.request.PenaltyRequestDTO;
 import com.example.spum_backend.dto.response.BookingResponseDTO;
+import com.example.spum_backend.dto.response.FileInfoResponseDTO;
 import com.example.spum_backend.entity.Booking;
 import com.example.spum_backend.entity.Item;
 import com.example.spum_backend.entity.Student;
@@ -12,6 +13,7 @@ import com.example.spum_backend.exception.BookingConflict;
 import com.example.spum_backend.exception.notFound.BookingNotFoundException;
 import com.example.spum_backend.mapper.BookingMapper;
 import com.example.spum_backend.repository.BookingRepository;
+import com.example.spum_backend.service.InvoiceService;
 import com.example.spum_backend.service.interfaces.BookingService;
 import com.example.spum_backend.service.interfaces.PenaltyService;
 import com.example.spum_backend.service.interfaces.internal.BookingServiceEntity;
@@ -36,6 +38,7 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
     private final StudentServiceEntity studentServiceEntity;
     private final BookingMapper bookingMapper;
     private final PenaltyService penaltyService;
+    private final InvoiceService invoiceService;
 
 
     private static final ZoneId ZONE_ID = ZoneId.of("America/Bogota");
@@ -216,6 +219,14 @@ public class BookingServiceImpl implements BookingService, BookingServiceEntity 
     public Booking getBookingById(Long id) {
         return bookingRepository.findById(id)
                 .orElseThrow(() -> new BookingNotFoundException("Booking not found"));
+    }
+
+
+    @Override
+    public FileInfoResponseDTO markABookingAsReturned(Long id) {
+        Booking booking = getBookingById(id);
+        BookingResponseDTO bookingResponseDTO = updateBookingStatus(new BookingUpdateRequestDTO());
+        return invoiceService.getInvoiceFile(booking);
     }
 }
 

@@ -3,7 +3,10 @@ package com.example.spum_backend.controller;
 import com.example.spum_backend.dto.request.booking.BookingCreateRequestDTO;
 import com.example.spum_backend.dto.request.booking.BookingUpdateRequestDTO;
 import com.example.spum_backend.dto.response.BookingResponseDTO;
+import com.example.spum_backend.dto.response.FileInfoResponseDTO;
 import com.example.spum_backend.service.interfaces.BookingService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +40,7 @@ public class BookingController {
         return ResponseEntity.ok(updatedBooking);
     }
 
-    @PatchMapping("/update-status")
+    @PatchMapping("/status")
     public ResponseEntity<BookingResponseDTO> updateBookingStatus(@RequestBody BookingUpdateRequestDTO bookingUpdateRequestDTO) {
         BookingResponseDTO updatedBooking = bookingService.updateBookingStatus(bookingUpdateRequestDTO);
         return ResponseEntity.ok(updatedBooking);
@@ -47,5 +50,17 @@ public class BookingController {
     public ResponseEntity<List<BookingResponseDTO>> findBookingsByStudentEmail(@RequestParam String email) {
         List<BookingResponseDTO> bookings = bookingService.findBookingsByStudentEmail(email);
         return ResponseEntity.ok(bookings);
+    }
+    @PostMapping("/{id}/return")
+    public ResponseEntity<byte[]> markBookingReturned(@PathVariable Long id) {
+        FileInfoResponseDTO response = bookingService.markABookingAsReturned(id);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+response.getFileName());
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_PDF).body(response.getFile());
     }
 }
