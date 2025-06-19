@@ -1,6 +1,6 @@
 # 🛠️ SPUM Backend
 
-Este es el backend del sistema **SPUM** (Sistema de Préstamo Universitario de Material), desarrollado con **Spring Boot**. Proporciona una API RESTful para gestionar usuarios, estudiantes, artículos, reservas y penalizaciones en una institución educativa.
+Este es el backend del sistema **SPUM** (Sistema de Préstamo de la Universidad del Magdalena), desarrollado con **Spring Boot**. Proporciona una API RESTful para gestionar usuarios, estudiantes, artículos, reservas y penalizaciones en una institución educativa.
 
 ---
 
