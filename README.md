@@ -100,6 +100,6 @@ El proyecto incluye tareas programadas para revisar y asignar penalidades autom�
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
 **Juan Andrés Avendaño Luján**
